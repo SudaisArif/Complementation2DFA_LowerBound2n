@@ -1,0 +1,28 @@
+Finite checks of the new ternary two-bank witness
+
+Scope: exact transition tables in the manuscript model, with no stationary moves,
+inward endmarker moves, initial configuration at LEFT, and sole accepting
+configuration at LEFT. Every ordinary word over the three-letter alphabet
+of length at most 7 was checked, including the empty word.
+
+The expected source formula is g(t(f(1)))=1 or g(t(f(2)))=1,
+where t(1)=1 and t(i)=2 for i!=1, with backward composition reversed.
+
+k  l   source states  complement states  words  accepts  loops  max complement steps
+ 3  3               6                 12   3280     1087   2193                    80
+ 3  4               7                 14   3280      852   2428                    96
+ 4  4               8                 16   3280      841   2439                   112
+10 11              21                 42   3280      583   2697                   112
+11 11              22                 44   3280      565   2715                   288
+11 12              23                 46   3280      595   2685                   304
+12 12              24                 48   3280      610   2670                   120
+12 13              25                 50   3280      583   2697                   112
+
+Total: 26,240 source/formula/complement comparisons; all passed.
+Every source input outside the displayed language looped.
+Every constructed complement run halted and returned the opposite answer.
+Every displayed marker row moved inward, and all states stayed within the
+specified n-state source and 2n-state complement sets.
+
+These finite checks verify implementation consistency on the tested inputs.
+They do not prove the asymptotic lower bound or replace either formal proof.

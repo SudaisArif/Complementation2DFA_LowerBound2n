@@ -1,0 +1,42 @@
+CORRECTNESS AND DELIVERY REVIEW — 8 October 2026
+
+Outcome
+Three separate AI-assisted mathematical review tracks and the integrating review found no substantive gap in the submitted exact factor-two proof. The standalone rewrite preserves the audited constructions and proves all interfaces used by the lower bound, except explicitly cited standard group facts.
+
+Main theorem (Theorem 2.1)
+For every n >= 22, the fixed ternary witness K_n has exact source complexity n and exact complement complexity 2n. This is in the explicitly defined model: +/-1 moves, inward endmarker moves, all states counted, acceptance only at (f,left endmarker), and infinite runs reject. The lower bounds allow arbitrary deterministic recognizers.
+
+GMP convention (Theorem 8.2)
+For every N >= 23, this family has exact source complexity N and exact complement complexity 2N-1 in GMP's acceptance-anywhere model. GMP Lemma 3.1 provides a no-added-state normalization. Its final state supplies a fixed backward channel; removing that channel preserves faithfulness and strengthens the transferred lower bounds. Adding one fresh globally final state to each of the main-model constructions attains both bounds. Thus this language cannot establish exact GMP 2N. An additive constant preserves the leading factor, but it cannot be omitted from an exact claim.
+
+Reviewed mathematical components
+- Source five-tuple, marker rows, looping rejection, and two-transformation language formula.
+- Independent permutation generation and paired-singular contexts, including opposite composition orders.
+- Contextual separation, interval substitution, local-group extraction, unit channels, and physical capacity.
+- Small-index group estimates, product subgroups, kernel blocks, third-derived-subgroup isolation, and equal-degree semantic labeling.
+- Fixed-answer query reduction, even completion, forbidden inverse subset, all four factor/orientation cases, and exact source minimality.
+- Complete 2n-state reverse-tree complement table, initial/final controls, endmarker leaves, halting proof, and 2n+2b state splitting.
+- GMP normalization, fixed-channel deletion, matching exact counts, and the separately stated convention limits.
+
+Computational corroboration
+- 26,240 supplied witness/formula/complement comparisons passed.
+- Independent small transformation closures have sizes 477, 5,016, and 54,400 for degrees (3,3), (3,4), and (4,4), respectively; each equals the independent unit pairs plus paired singular transformations.
+- 4,960,600 independently implemented source/input checks across 850,552 machine presentations passed: the constructed complements gave opposite answers, halted, respected marker directions, and met state budgets.
+These finite checks support the explicit constructions; the arbitrary-size lower bounds rest on the mathematical arguments, not enumeration. This review is not formal machine verification or external peer review.
+
+Editorial and source checks
+- Standalone introduction, related work, model, complete five-tuples, full proofs, conclusion, 17 references, and one vector source-flow diagram.
+- No dependency on the earlier 2n-4 manuscript, unpublished self-citation, or session-history prose.
+- GMP's fifth concluding problem verified as Section 6(e), printed page 1186; quoted and cited accurately.
+- Reverse-tree attribution added to Kunc–Okhotin and Martynova–Okhotin.
+- Short acknowledgments include Christos Kapoutsis, Adam Abu Ghaida (the requested sentence), and Codex Astra Ultra.
+
+Delivery checks
+- Tectonic 0.17.0 compilation passed; final PDF: 18 A4 pages.
+- All references and labels resolved; no LaTeX overfull/underfull boxes or missing-character diagnostics. Tectonic prints font-request trace messages for newtx; the rendered fonts are present.
+- All 18 rendered pages visually inspected; no clipping, overlap, broken equations, or malformed diagrams found.
+- Source ZIP includes only the TeX, BibTeX database, and compiled BBL; no external image assets are needed.
+- A clean ZIP extraction compiled successfully and produced identical extracted PDF text.
+- This version is published as a GitHub preprint; no arXiv identifier has been assigned.
+
+Portable executable checks and recorded expected results are provided alongside this report; see VERIFICATION.md. Internal working notes and superseded audit histories are not part of this publication package.

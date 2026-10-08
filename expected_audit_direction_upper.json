@@ -1,0 +1,65 @@
+{
+  "seed": 20261008,
+  "suites": {
+    "exhaustive_directional_binary_n1": {
+      "machines": 16,
+      "pairs": 496,
+      "source_accept": 496,
+      "empty_pairs": 16,
+      "max_complement_steps": 1,
+      "max_acceptance_tree": 6
+    },
+    "exhaustive_directional_binary_n2": {
+      "machines": 16200,
+      "pairs": 502200,
+      "source_accept": 266516,
+      "empty_pairs": 16200,
+      "max_complement_steps": 20,
+      "max_acceptance_tree": 12,
+      "source_reject": 215596,
+      "source_loop": 20088
+    },
+    "exhaustive_arbitrary_unary_n1": {
+      "machines": 12,
+      "pairs": 84,
+      "source_accept": 84,
+      "empty_pairs": 12,
+      "max_complement_steps": 1,
+      "max_acceptance_tree": 8
+    },
+    "exhaustive_arbitrary_unary_n2": {
+      "machines": 8100,
+      "pairs": 56700,
+      "source_accept": 32922,
+      "empty_pairs": 8100,
+      "max_complement_steps": 53,
+      "max_acceptance_tree": 16,
+      "source_reject": 16146,
+      "source_loop": 7632
+    },
+    "exhaustive_directional_unary_n3": {
+      "machines": 820224,
+      "pairs": 4101120,
+      "source_accept": 1585632,
+      "empty_pairs": 820224,
+      "max_complement_steps": 30,
+      "max_acceptance_tree": 18,
+      "source_reject": 2102568,
+      "source_loop": 412920
+    },
+    "random_ternary_n2_through_12": {
+      "machines": 6000,
+      "pairs": 300000,
+      "source_accept": 77388,
+      "empty_pairs": 6000,
+      "max_complement_steps": 618,
+      "max_acceptance_tree": 277,
+      "source_reject": 149038,
+      "source_loop": 73574
+    }
+  },
+  "status": "passed",
+  "elapsed_seconds": 13.911,
+  "total_machines": 850552,
+  "total_pairs": 4960600
+}

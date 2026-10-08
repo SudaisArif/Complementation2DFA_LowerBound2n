@@ -1,0 +1,3 @@
+(3,3): 477 pairs; expected 477; all independent unit pairs and all paired singular maps present.
+(3,4): 5,016 pairs; expected 5,016; all independent unit pairs and all paired singular maps present.
+(4,4): 54,400 pairs; expected 54,400; all independent unit pairs and all paired singular maps present.

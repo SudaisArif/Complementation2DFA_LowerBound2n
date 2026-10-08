@@ -1,0 +1,137 @@
+\begin{thebibliography}{10}
+
+\bibitem{DixonMortimer1996}
+John~D. Dixon and Brian Mortimer.
+\newblock {\em Permutation Groups}, volume 163 of {\em Graduate Texts in
+  Mathematics}.
+\newblock Springer, New York, 1996.
+\newblock
+  \href{https://doi.org/10.1007/978-1-4612-0731-3}{\nolinkurl{doi:10.1007/978-1-4612-0731-3}}.
+
+\bibitem{GMP}
+Viliam Geffert, Carlo Mereghetti, and Giovanni Pighizzini.
+\newblock Complementing two-way finite automata.
+\newblock {\em Information and Computation}, 205(8):1173--1187, 2007.
+\newblock
+  \href{https://doi.org/10.1016/j.ic.2007.01.008}{\nolinkurl{doi:10.1016/j.ic.2007.01.008}}.
+
+\bibitem{Howie1995}
+John~M. Howie.
+\newblock {\em Fundamentals of Semigroup Theory}, volume~12 of {\em London
+  Mathematical Society Monographs, New Series}.
+\newblock Clarendon Press, Oxford, 1995.
+\newblock
+  \href{https://doi.org/10.1093/oso/9780198511946.001.0001}{\nolinkurl{doi:10.1093/oso/9780198511946.001.0001}}.
+
+\bibitem{JiraskovaOkhotin2017}
+Galina Jir{\'a}skov{\'a} and Alexander Okhotin.
+\newblock On the state complexity of operations on two-way finite automata.
+\newblock {\em Information and Computation}, 253:36--63, 2017.
+\newblock
+  \href{https://doi.org/10.1016/j.ic.2016.12.007}{\nolinkurl{doi:10.1016/j.ic.2016.12.007}}.
+
+\bibitem{Kapoutsis2018}
+Christos~A. Kapoutsis.
+\newblock Optimal {2DFA} algorithms for one-way liveness on two and three
+  symbols.
+\newblock In Hans-Joachim B{\"o}ckenhauer, Dennis Komm, and Walter Unger,
+  editors, {\em Adventures Between Lower Bounds and Higher Altitudes: Essays
+  Dedicated to Juraj Hromkovi{\v c} on the Occasion of His 60th Birthday},
+  volume 11011 of {\em Lecture Notes in Computer Science}, pages 33--48.
+  Springer, Cham, 2018.
+\newblock
+  \href{https://doi.org/10.1007/978-3-319-98355-4_3}{\nolinkurl{doi:10.1007/978-3-319-98355-4_3}}.
+
+\bibitem{KuncOkhotin2012}
+Michal Kunc and Alexander Okhotin.
+\newblock State complexity of operations on two-way finite automata over a
+  unary alphabet.
+\newblock {\em Theoretical Computer Science}, 449:106--118, 2012.
+\newblock
+  \href{https://doi.org/10.1016/j.tcs.2012.04.010}{\nolinkurl{doi:10.1016/j.tcs.2012.04.010}}.
+
+\bibitem{kuncokhotin2020}
+Michal Kunc and Alexander Okhotin.
+\newblock Reversibility of computations in graph-walking automata.
+\newblock {\em Information and Computation}, 275:104631, December 2020.
+\newblock
+  \href{https://doi.org/10.1016/j.ic.2020.104631}{\nolinkurl{doi:10.1016/j.ic.2020.104631}}.
+
+\bibitem{martynovaokhotin2021}
+Olga Martynova and Alexander Okhotin.
+\newblock Lower bounds for graph-walking automata.
+\newblock In Markus Bl{\"a}ser and Benjamin Monmege, editors, {\em 38th
+  International Symposium on Theoretical Aspects of Computer Science (STACS
+  2021)}, volume 187 of {\em Leibniz International Proceedings in Informatics
+  (LIPIcs)}, pages 52:1--52:13, Dagstuhl, Germany, 2021. Schloss Dagstuhl --
+  Leibniz-Zentrum f{\"u}r Informatik.
+\newblock
+  \href{https://doi.org/10.4230/LIPIcs.STACS.2021.52}{\nolinkurl{doi:10.4230/LIPIcs.STACS.2021.52}}.
+
+\bibitem{OpenAIComplementation2026}
+{OpenAI}.
+\newblock An exponential state lower bound for two-way nondeterministic
+  complementation.
+\newblock Unpublished manuscript, September 25 2026.
+
+\bibitem{OpenAILiveness2026}
+{OpenAI}.
+\newblock An exponential two-way deterministic state lower bound for one-way
+  liveness.
+\newblock Unpublished manuscript, September 25 2026.
+
+\bibitem{Pighizzini2012}
+Giovanni Pighizzini.
+\newblock Two-way finite automata: Old and recent results.
+\newblock {\em Electronic Proceedings in Theoretical Computer Science},
+  90:3--20, 2012.
+\newblock
+  \href{https://doi.org/10.4204/EPTCS.90.1}{\nolinkurl{doi:10.4204/EPTCS.90.1}}.
+
+\bibitem{Pin1997}
+Jean-{\'E}ric Pin.
+\newblock Syntactic semigroups.
+\newblock In Grzegorz Rozenberg and Arto Salomaa, editors, {\em Handbook of
+  Formal Languages}, volume~1, pages 679--746. Springer, Berlin, Heidelberg,
+  1997.
+\newblock
+  \href{https://doi.org/10.1007/978-3-642-59136-5_10}{\nolinkurl{doi:10.1007/978-3-642-59136-5_10}}.
+
+\bibitem{RabinScott1959}
+Michael~O. Rabin and Dana Scott.
+\newblock Finite automata and their decision problems.
+\newblock {\em IBM Journal of Research and Development}, 3(2):114--125, 1959.
+\newblock
+  \href{https://doi.org/10.1147/rd.32.0114}{\nolinkurl{doi:10.1147/rd.32.0114}}.
+
+\bibitem{SakodaSipser1978}
+William~J. Sakoda and Michael Sipser.
+\newblock Nondeterminism and the size of two way finite automata.
+\newblock In {\em Proceedings of the Tenth Annual ACM Symposium on Theory of
+  Computing}, STOC '78, pages 275--286. ACM, 1978.
+\newblock
+  \href{https://doi.org/10.1145/800133.804357}{\nolinkurl{doi:10.1145/800133.804357}}.
+
+\bibitem{SW}
+John Shareshian and Russ Woodroofe.
+\newblock Divisibility of binomial coefficients and generation of alternating
+  groups.
+\newblock {\em Pacific Journal of Mathematics}, 292(1):223--238, 2018.
+\newblock
+  \href{https://doi.org/10.2140/pjm.2018.292.223}{\nolinkurl{doi:10.2140/pjm.2018.292.223}}.
+
+\bibitem{Shepherdson1959}
+J.~C. Shepherdson.
+\newblock The reduction of two-way automata to one-way automata.
+\newblock {\em IBM Journal of Research and Development}, 3(2):198--200, 1959.
+\newblock
+  \href{https://doi.org/10.1147/rd.32.0198}{\nolinkurl{doi:10.1147/rd.32.0198}}.
+
+\bibitem{Sipser1980}
+Michael Sipser.
+\newblock Halting space-bounded computations.
+\newblock {\em Theoretical Computer Science}, 10(3):335--338, 1980.
+\newblock
+  \href{https://doi.org/10.1016/0304-3975(80)90053-5}{\nolinkurl{doi:10.1016/0304-3975(80)90053-5}}.
+
+\end{thebibliography}

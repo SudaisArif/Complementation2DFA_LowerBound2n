@@ -1,0 +1,22 @@
+# TeX build products; keep the paper PDF and compiled bibliography.
+build/
+*.aux
+*.log
+*.out
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+*.toc
+
+# Local Python outputs.
+__pycache__/
+*.py[cod]
+.venv/
+results/
+
+# Editor and operating-system metadata.
+.DS_Store
+.idea/
+.vscode/

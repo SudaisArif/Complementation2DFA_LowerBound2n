@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite the preprint below."
+title: "An Exact Factor-Two Witness for Two-Way Deterministic Complementation"
+authors:
+  - family-names: Arif
+    given-names: Sudais
+    affiliation: Carnegie Mellon University in Qatar
+version: 1.0.0
+date-released: 2026-10-08
+url: "https://github.com/SudaisArif/Complementation2DFA_LowerBound2n"
+repository-code: "https://github.com/SudaisArif/Complementation2DFA_LowerBound2n"
+abstract: >-
+  For every n >= 22, a fixed ternary language has exact two-way deterministic
+  state complexity n and complement complexity 2n under left-endmarker
+  acceptance, with infinite runs rejecting. Under the acceptance-anywhere
+  convention of Geffert, Mereghetti, and Pighizzini, the same family has exact
+  complexities N and 2N-1 for every N >= 23. The repository contains the
+  preprint, complete LaTeX source, and finite verification programs.
+keywords:
+  - two-way deterministic finite automata
+  - complementation
+  - state complexity
+  - lower bounds
+  - automata theory
+preferred-citation:
+  type: generic
+  title: "An Exact Factor-Two Witness for Two-Way Deterministic Complementation"
+  authors:
+    - family-names: Arif
+      given-names: Sudais
+  year: 2026
+  month: 10
+  date-released: 2026-10-08
+  notes: "Preprint, version 1.0.0"
+  url: "https://github.com/SudaisArif/Complementation2DFA_LowerBound2n"
