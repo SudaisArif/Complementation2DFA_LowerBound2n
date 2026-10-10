@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this work, please cite the preprint below."
-title: "An Exact Factor-Two Witness for Two-Way Deterministic Complementation"
+title: "A Factor-Two Lower Bound for Complementing Two-Way Deterministic Finite Automata"
 authors:
   - family-names: Arif
     given-names: Sudais
@@ -24,12 +24,12 @@ keywords:
   - automata theory
 preferred-citation:
   type: generic
-  title: "An Exact Factor-Two Witness for Two-Way Deterministic Complementation"
+  title: "A Factor-Two Lower Bound for Complementing Two-Way Deterministic Finite Automata"
   authors:
     - family-names: Arif
       given-names: Sudais
   year: 2026
   month: 10
   date-released: 2026-10-08
-  notes: "Preprint, version 1.0.0"
+  notes: "Preprint, editorial revision of 10 October 2026"
   url: "https://github.com/SudaisArif/Complementation2DFA_LowerBound2n"

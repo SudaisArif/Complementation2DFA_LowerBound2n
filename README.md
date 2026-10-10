@@ -1,8 +1,8 @@
 # Complementation2DFA_LowerBound2n
 
-**An Exact Factor-Two Witness for Two-Way Deterministic Complementation**  
+**A Factor-Two Lower Bound for Complementing Two-Way Deterministic Finite Automata**  
 Sudais Arif · Carnegie Mellon University in Qatar  
-Preprint, version 1.0.0 · 8 October 2026
+Preprint · 8 October 2026 · Editorial revision, 10 October 2026
 
 **[Read the paper (PDF)](complementation_exact_2n.pdf)** · [LaTeX source](complementation_exact_2n.tex) · [Source ZIP](complementation_exact_2n_arxiv.zip) · [Verification instructions](VERIFICATION.md)
 
@@ -11,9 +11,9 @@ Preprint, version 1.0.0 · 8 October 2026
 For every $n\ge22$, there is a language $K_n$ over the fixed alphabet $\{A,B,C\}$ such that
 
 $$
-\operatorname{sc}_2(K_n)=n,
+\operatorname{sc}(K_n)=n,
 \qquad
-\operatorname{sc}_2(\overline{K_n})=2n.
+\operatorname{sc}(\overline{K_n})=2n.
 $$
 
 The result is unconditional. Both state minima allow arbitrary two-way deterministic finite automata, including automata that reject by an infinite computation. The lower bound is proved in the paper; the included programs provide finite checks of the explicit constructions.
@@ -100,11 +100,13 @@ shasum -a 256 -c SHA256SUMS
 ```bibtex
 @misc{arif2026exactfactor,
   author = {Sudais Arif},
-  title = {An Exact Factor-Two Witness for Two-Way Deterministic Complementation},
+  title = {A Factor-Two Lower Bound for Complementing Two-Way Deterministic Finite Automata},
   year = {2026},
-  note = {Preprint, version 1.0.0},
+  note = {Preprint, editorial revision of 10 October 2026},
   url = {https://github.com/SudaisArif/Complementation2DFA_LowerBound2n}
 }
 ```
+
+The PDF and sources on the main branch include the editorial revision of 10 October 2026: the revised title, introduction, notation, acknowledgments, and reference links. The original `v1.0.0` release remains available as a historical snapshot.
 
 Use a release tag or commit identifier when citing a specific version. Corrections and mathematical questions can be reported through the repository's Issues tab. Review details and the acknowledgments, including research assistance, appear in the paper and review summary.

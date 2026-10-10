@@ -8,7 +8,7 @@
 \usetikzlibrary{arrows.meta,positioning}
 \usepackage[hidelinks]{hyperref}
 \hypersetup{
- pdftitle={An Exact Factor-Two Witness for Two-Way Deterministic Complementation},
+ pdftitle={A Factor-Two Lower Bound for Complementing Two-Way Deterministic Finite Automata},
  pdfauthor={Sudais Arif},
  pdfsubject={State complexity of two-way deterministic complementation},
  pdfkeywords={two-way finite automata, complementation, state complexity, alternating groups, finite semigroups}
@@ -29,7 +29,7 @@
 \newcommand{\Sym}{\mathfrak S}
 \newcommand{\LL}{\mathsf L}
 \newcommand{\RR}{\mathsf R}
-\newcommand{\scTwo}{\operatorname{sc}_2}
+\newcommand{\statecomplexity}{\operatorname{sc}}
 \newcommand{\im}{\operatorname{Im}}
 \newcommand{\dom}{\operatorname{dom}}
 \newcommand{\id}{\operatorname{id}}
@@ -39,7 +39,7 @@
  {\par\noindent\rule{\linewidth}{.4pt}\par\smallskip
   \noindent\textbf{Abstract}\par\smallskip\noindent\ignorespaces}
  {\par\smallskip\noindent\rule{\linewidth}{.4pt}\par\medskip}
-\title{An Exact Factor-Two Witness for\\Two-Way Deterministic Complementation}
+\title{A Factor-Two Lower Bound for Complementing\\Two-Way Deterministic Finite Automata}
 \author{Sudais Arif\\[.3em]\small\itshape Carnegie Mellon University in Qatar}
 \date{}
 \begin{document}
@@ -47,165 +47,143 @@
 \thispagestyle{empty}
 
 \begin{abstract}
-For every $n\ge22$, we construct a language over one fixed three-letter
-alphabet whose two-way deterministic state complexity is exactly $n$
-and whose complement has state complexity exactly $2n$. Acceptance is
-at the left endmarker, and infinite computations reject. The lower
-bound applies to arbitrary deterministic targets. The witness uses two
-independent transformation systems, one in each scan direction. Its
-proof extracts a product of alternating groups from the interval
-behavior of any target, isolates one natural group orbit in a small
-channel action, and applies a permutation-query obstruction. A single
-paired collapse letter supplies all required singular contexts. We
-also give a complete $2n$-state halting complement construction for
-direction-determinate sources. Splitting states by incoming direction
-extends it to a $2n+2b$ bound for arbitrary sources, where $b$ counts
-states entered in both directions. Under the acceptance-anywhere
-convention of Geffert, Mereghetti, and Pighizzini, the same family
-has exact complexities $N$ and $2N-1$ for every $N\ge23$.
+For every $n\ge22$, we construct a language over a fixed three-letter
+alphabet whose two-way deterministic state complexity is $n$ and whose
+complement has state complexity $2n$. Acceptance is at the left
+endmarker, and infinite computations reject. The lower bound holds
+for arbitrary deterministic recognizers. The proof uses the group of
+transformations induced by the witness to constrain the behavior of a
+smaller recognizer, then derives a contradiction from a permutation
+query problem. A matching halting complement follows from a
+$2n$-state construction for sources whose destination states determine
+the direction of each transition. Splitting states by incoming
+direction gives a $2n+2b$ upper bound for general sources, where $b$
+counts states entered in both directions. In the acceptance-anywhere
+model of Geffert, Mereghetti, and Pighizzini, the same family has exact
+complexities $N$ and $2N-1$ for every $N\ge23$.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
 
-Two-way deterministic finite automata (2DFA) can revisit their input,
-but their memory consists only of a finite control and the position of
-the input head. The classical results of Rabin and
-Scott~\cite{RabinScott1959} and Shepherdson~\cite{Shepherdson1959}
-show that two-way finite automata recognize exactly the regular
-languages. State complexity asks how much their descriptions can
-shrink, and how their sizes change under simulations and language
-operations. Sakoda and Sipser~\cite{SakodaSipser1978} established a
-central framework for these questions; Pighizzini~\cite{Pighizzini2012}
-surveys the subsequent theory.
+Complementation is a basic operation on formal languages. If
+$L\subseteq\Sigma^*$, then the complement of $L$, relative to the
+fixed alphabet $\Sigma$, is $\overline L=\Sigma^*\setminus L$.
+Given a machine for $L$, we ask how large a machine of the same type
+for $\overline L$ must be, when such a machine exists.
 
-Complementation is particularly sensitive to nontermination. A
-deterministic source can reject a word either by halting or by running
-forever. Exchanging only its halting outcomes leaves an infinite run
-rejecting, although the complement must accept that word. The question
-is how many states this change in behavior can force.
+For a deterministic machine that halts on every input, complementation
+is obtained by exchanging accepting and nonaccepting outcomes. The
+situation changes for recognizers that may have infinite computations.
+A word can then fail to be accepted either because the computation
+halts without accepting or because it never halts. A complementing
+construction must account for both possibilities. Sipser's method
+provides a way of converting nonhalting behavior into halting behavior
+in space-bounded machines~\cite{Sipser1980}.
 
-In their 2007 paper, Geffert, Mereghetti, and Pighizzini
-(GMP)~\cite[Section~6, p.~1186, problem~(e)]{GMP} posed the fifth
-of their concluding open problems:
-\begin{quote}
-``Prove (or disprove) the existence of any gap between 2dfa's and
-2dfa's accepting the complement.''
-\end{quote}
-We establish an exact factor-two witness in the left-endmarker
-acceptance model specified below. Section~\ref{sec:conventions}
-proves that, in GMP's acceptance convention, the same family has
-exact source and complement complexities $N$ and $2N-1$ for
-$N\ge23$. The leading factor is unchanged; the exact additive
-term records the convention.
+For complete one-way deterministic finite automata, complementation
+is immediate: the machine reads the input once, always halts, and so
+swapping final and nonfinal states recognizes the complement. Two-way
+deterministic finite automata (2DFA) still recognize only regular
+languages~\cite{RabinScott1959,Shepherdson1959}, but their head can
+move in both directions. A 2DFA may therefore reject by looping rather
+than by halting, so complementation cannot in general be obtained
+simply by swapping accepting and nonaccepting states.
 
-\subsection{Results}
+When Sipser's method is specialized to two-way finite automata, it
+gives a quadratic $O(n^2)$ upper bound for complementing an $n$-state
+2DFA. Geffert, Mereghetti, and Pighizzini (GMP) improved this to $4n$
+states, independently of the input alphabet~\cite{GMP}. They asked
+whether complementation can require any increase at all: namely,
+whether there exists an $n$-state 2DFA whose complement cannot be
+recognized by an $n$-state 2DFA. This is the fifth open problem in
+their concluding section~\cite[Section~6, p.~1186, problem~(e)]{GMP}.
 
-For each $n\ge22$, let $k=\lfloor n/2\rfloor$ and
-$\ell=\lceil n/2\rceil$. We give the complete five-tuple of a
-$(k+\ell)$-state automaton over the fixed alphabet
-$\Sigma=\{\mathtt A,\mathtt B,\mathtt C\}$. Its language $K_n$
-satisfies
+We answer this question affirmatively under the acceptance convention
+fixed below. Here $\statecomplexity(L)$ denotes the \emph{state complexity}
+of $L$: the minimum number of states of a 2DFA recognizing $L$ with
+acceptance at the left endmarker and infinite computations counted as
+rejection. For each $n\ge22$, we construct an $n$-state 2DFA over
+the fixed alphabet $\Sigma=\{\mathtt A,\mathtt B,\mathtt C\}$ whose
+language $K_n$ satisfies
 \[
- \scTwo(K_n)=n,\qquad \scTwo(\Sigma^*\setminus K_n)=2n.
+ \statecomplexity(K_n)=n,\qquad \statecomplexity(\Sigma^*\setminus K_n)=2n.
 \]
-Both minima range over every deterministic automaton in our model,
-including machines that change direction arbitrarily and reject by
-infinite computations. Thus the lower bound is a property of the
-language, independent of a particular complementing construction.
+Both lower bounds apply to arbitrary deterministic recognizers in this
+model.
+The same family also answers GMP's question in their original model,
+where a final state accepts at any tape position: its exact source
+and complement complexities are $N$ and $2N-1$, for every $N\ge23$.
+Section~\ref{sec:conventions} proves this comparison. The leading
+factor is two in both conventions.
 
-The source uses $k$ states for a forward transformation and $\ell$
-states for an independent backward transformation. These two banks
-account for every source state, including the initial and accepting
-states. After a failed first round, subsequent rounds reuse the same start
-configuration. If both round tests fail, the computation repeats
-indefinitely; thus every rejecting source computation is infinite. The same
-language has a halting $2n$-state complement, obtained from a general
-construction for sources whose destination state determines the
-direction of each transition. This proves the exact equality.
+The witness divides its states into two sets, or \emph{banks}, one
+for forward scans and one for backward scans. Each input word induces
+a transformation on each bank. A forward scan followed by a backward
+scan tests an acceptance condition. If the first test fails, the
+machine makes a second round from a different starting state. If this
+test also fails, the same round repeats forever. Thus every rejecting
+computation of the witness is infinite.
 
-More generally, let $b$ count the states entered in both directions,
-after deleting the unused outgoing row of the accepting configuration.
-We give a halting complement with at most $2n+2b$ states. In particular,
-the worst-case ternary complementation cost satisfies
-$2n\le C_3(n)\le4n$ for $n\ge22$. A family forcing a leading
-constant greater than two must have a positive proportion of states
-entered in both directions.
+We then consider an arbitrary automaton for $\overline{K_n}$. Its
+behavior on a nonempty input interval is summarized by the state and
+side of the first exit for every possible entry. We call this record
+an \emph{interval diagram}. Equal diagrams can be substituted in any
+fixed context without changing acceptance. The witness supplies
+contexts that distinguish independent permutations on the two banks.
+These distinctions force a group of target diagrams to map onto a
+product of two alternating groups. This group acts on the states in
+which runs cross the interval, with the two exit directions counted
+separately. We call these signed exits \emph{through channels}.
+Determinism bounds their number by the number of target states.
 
-\subsection{Related work}
+If the complementing machine had fewer than $2n$ states, we show that
+one alternating factor would act naturally on just one orbit of
+channels while fixing all other channels. On this subgroup, each
+traversal through the moving orbit amounts to a query to a permutation
+or its inverse. An answer leaves the machine in a fixed state at a
+fixed boundary, so the next action depends only on that answer and
+cannot also depend on which query produced it. We prove that such a
+controller cannot perform the test required by complementation. This
+forces at least $2n$ states. The same group argument also proves that
+the witness language itself requires $n$ states.
 
-GMP~\cite{GMP} construct a halting complement with $4n$ states in
-their model, adapting Sipser's reverse traversal of deterministic
-computations~\cite{Sipser1980}. The state complexity of operations
-on two-way automata is studied more broadly by Jir\'askov\'a and
-Okhotin~\cite{JiraskovaOkhotin2017}; Kunc and
-Okhotin~\cite{KuncOkhotin2012} treat the unary setting. Alphabet and
-input restrictions require separate attention: Kapoutsis's work on
-one-way liveness~\cite{Kapoutsis2018}, for example, concerns inputs
-of length two and three. Our witnesses use three letters for all
-$n$, with no restriction on input length.
+A matching upper bound follows from reverse traversal of the
+configuration graph. In the witness, every transition entering a
+given state moves in the same direction. For sources with this
+property, called \emph{direction-determinate}, the traversal uses
+$2n$ states. We give its full transition table for the present model.
+For an arbitrary source, splitting the $b$ states entered in both
+directions gives a halting complement with at most $2n+2b$ states.
+Thus a lower bound with a leading constant greater than two would
+require linearly many source states entered in both directions.
 
-The upper construction belongs to the reverse-tree traversal tradition.
-Kunc and Okhotin~\cite{kuncokhotin2020} develop this method for
-graph-walking automata. The $2n$-state reverse traversal for a
-direction-determinate automaton is explicitly restated by Martynova and
-Okhotin~\cite[Lemma~8]{martynovaokhotin2021}. We give a full transition
-prescription for the present acceptance model, including initialization,
-endmarker leaves, and all counted states. The exact lower bound is
-proved against unrestricted two-way deterministic targets.
+\paragraph{Related work.}
+State costs of simulations between one-way and two-way automata were
+studied by Sakoda and Sipser~\cite{SakodaSipser1978};
+Pighizzini~\cite{Pighizzini2012} surveys subsequent work.
+Jir\'askov\'a and Okhotin~\cite{JiraskovaOkhotin2017} study operations
+on two-way automata, and Kunc and Okhotin~\cite{KuncOkhotin2012}
+treat unary alphabets. Kapoutsis~\cite{Kapoutsis2018} studies one-way
+liveness on inputs of length two and three. Our alphabet has three
+letters, with no restriction on input length. The reverse traversal
+for direction-determinate automata belongs to the graph-walking
+constructions of Kunc and Okhotin~\cite{kuncokhotin2020}; its $2n$
+state bound is restated by Martynova and
+Okhotin~\cite[Lemma~8]{martynovaokhotin2021}.
 
-The lower-bound argument combines contextual distinguishability,
-finite semigroups, and small permutation-group actions. Pin~\cite{Pin1997}
-and Howie~\cite{Howie1995} provide the algebraic background; Dixon and
-Mortimer~\cite{DixonMortimer1996} provide background on permutation
-groups. The precise primitive-group input used here is
-Shareshian and Woodroofe's Lemma~4.2~\cite{SW}; we prove the needed
-small-index consequences. Algebraic descriptions of two-way behavior
-also appear in recent manuscripts on deterministic simulation of
-one-way liveness~\cite{OpenAILiveness2026} and nondeterministic
-complementation~\cite{OpenAIComplementation2026}. Those results address
-different state-complexity questions. The proof here supplies its own
-interval-diagram, group-isolation, and query arguments. All lower
-bounds proved here are unconditional.
+For background on semigroups and permutation groups, see
+Pin~\cite{Pin1997}, Howie~\cite{Howie1995}, and Dixon and
+Mortimer~\cite{DixonMortimer1996}. Our small-index argument uses
+Shareshian and Woodroofe~\cite[Lemma~4.2]{SW}. Related descriptions
+of interval behavior occur in OpenAI's preprints on deterministic
+simulation of one-way liveness~\cite{OpenAILiveness2026} and
+nondeterministic complementation~\cite{OpenAIComplementation2026}.
+Those papers concern different state-complexity questions. The proof
+here gives the interval-diagram and group arguments needed for this
+lower bound, apart from the cited standard group-theoretic facts.
+No unproved conjecture is assumed.
 
-\subsection{Proof overview}
-
-Two permutation letters generate independent symmetric-group actions
-on the two state banks. A third letter collapses a pair of points in
-each bank simultaneously. Conjugation and idempotent padding then
-realize every pair of singular transformations. These words supply
-ordinary contexts that distinguish all elements of
-$\Alt_k\times\Alt_\ell$.
-
-For an arbitrary recognizer of the witness or its complement, record
-the first exits of every run through a nonempty input interval. The
-resulting finite semigroup maps onto $\Alt_k\times\Alt_\ell$ by
-contextual separation. A minimal idempotent yields a group of actual
-interval diagrams. This group acts faithfully on forward and backward
-through channels, and the total number of such channels is at most
-the number of target states.
-
-Below $2(k+\ell)$ channels, a small-index analysis isolates a subgroup
-acting naturally on exactly one orbit of one semantic factor and
-fixing every other channel. The possible kernel blocks have size at
-most four. Passing to the third derived subgroup removes their
-solvable actions while preserving the alternating factor. Fixed
-contexts then turn every variable traversal into a permutation query
-whose answer has a fixed continuation, with no separately retained
-caller. Each possible factor and channel orientation would solve a
-forbidden inverse-permutation subset test. This excludes every target
-with fewer than $2(k+\ell)$ states. The same group analysis proves
-that the source requires at least $k+\ell$ states.
-
-Section~\ref{sec:model} fixes the model and states the result.
-Section~\ref{sec:new-witness} gives the source and the required
-transformation words. Sections~\ref{sec:diagrams} and~\ref{sec:groups}
-develop the interval and group arguments. Section~\ref{sec:lower}
-proves the lower bounds. Section~\ref{sec:direction-upper} supplies
-the matching halting construction and the bound in terms of mixed
-incoming directions. Section~\ref{sec:conventions} compares acceptance
-conventions.
-
-\section{Preliminaries and Main Result}\label{sec:model}
+\section{Preliminaries and main result}\label{sec:model}
 
 \subsection{Automata and acceptance}
 
@@ -232,26 +210,27 @@ including $s$ and $f$, contributes to the state count.
 
 \subsection{State complexity}
 
-Write $\scTwo(L)$ for the minimum number of states of a 2DFA
+Write $\statecomplexity(L)$ for the minimum number of states of a 2DFA
 recognizing $L$ in this model. Fix
 $\Sigma=\{\mathtt A,\mathtt B,\mathtt C\}$, write
 $\overline L=\Sigma^*\setminus L$, and, for $n\ge1$, set
 \begin{equation}\label{eq:cost}
- C_3(n)=\max\{\scTwo(\overline{L(A)}):
+ C_3(n)=\max\{\statecomplexity(\overline{L(A)}):
                  A\text{ is over }\Sigma,\ |Q_A|\le n\}.
 \end{equation}
 The maximum exists: there are finitely many transition tables up to
 state renaming, and the recognized languages are regular. Their
 complements can also be realized in this model by a rightward
 finite-state scan followed, upon success, by an accepting leftward
-sweep. The budget in~\eqref{eq:cost} concerns a presented source;
-our witness will additionally be proved minimal.
+sweep. The bound in~\eqref{eq:cost} is on the number of states of the given
+source. We will also prove that no smaller source recognizes our
+witness language.
 
 \begin{theorem}[Exact factor-two witness]\label{thm:main}
 For every $n\ge22$, there is an explicitly specified $n$-state 2DFA
 over $\Sigma$ whose language $K_n$ satisfies
 \[
- \scTwo(K_n)=n,\qquad \scTwo(\overline{K_n})=2n.
+ \statecomplexity(K_n)=n,\qquad \statecomplexity(\overline{K_n})=2n.
 \]
 Consequently $C_3(n)\ge2n$ for every $n\ge22$. Both lower bounds
 range over arbitrary deterministic recognizers in the stated model,
@@ -265,7 +244,7 @@ composed from right to left. For a positive integer $t$, write
 $[t]=\{1,\ldots,t\}$, and let $\Sym_t$ and $\Alt_t$ be the
 symmetric and alternating groups on $[t]$.
 
-\section{A Ternary Witness with Two Transformation Systems}
+\section{The ternary witness}
 \label{sec:new-witness}
 
 \subsection{The source five-tuple and its language}
@@ -370,15 +349,15 @@ additional states.}
 \label{fig:witness}
 \end{figure}
 
-\subsection{Independent permutations and paired singular contexts}
+\subsection{Words for independent transformations}
 
 For a word over $\{\mathtt A,\mathtt B\}$, both transformations are
 permutations; write $h_w=g_w^{-1}$. Then
 \[
  (f_{uv},h_{uv})=(f_v\circ f_u,h_v\circ h_u).
 \]
-Thus the two letters have semantic pairs $(c_k,d_\ell)$ and
-$(d_k,c_\ell)$ in these coordinates. Since $r_k,r_\ell$ are odd,
+Thus $\mathtt A$ and $\mathtt B$ induce the pairs $(c_k,d_\ell)$
+and $(d_k,c_\ell)$ in the coordinates $(f_w,h_w)$. Since $r_k,r_\ell$ are odd,
 \[
 \begin{array}{c|c}
  \text{word}&(f_w,h_w)\\ \hline
@@ -412,25 +391,24 @@ Every singular transformation of $[t]$ is a permutation composed after a
 nonempty product of elementary collapses. Indeed, choose one representative
 of each nonempty fiber and collapse each other point onto that representative.
 A permutation then maps the representatives to their prescribed images.
-An elementary collapse is idempotent, so repeating one adjacent factor pads
-such a product to any larger length. We may therefore write, with the same
-positive integer $r$,
+Every elementary collapse is idempotent, so repeating a factor
+consecutively lengthens the product without changing its value.
+We may therefore write, with the same positive integer $r$,
 \[
  f=\pi\circ a_r\circ\cdots\circ a_1,
  \qquad
  g=\rho\circ b_r\circ\cdots\circ b_1,
 \]
-where all $a_i,b_i$ are elementary collapses. Choose an initial unit word
+where all $a_i,b_i$ are elementary collapses. Choose an initial permutation word
 with pair $(\mathrm{id},\rho)$, then $r$ words with pairs
-$(a_i,b_{r+1-i})$ in the order $i=1,\ldots,r$, and a final unit word with
+$(a_i,b_{r+1-i})$ in the order $i=1,\ldots,r$, and a final permutation word with
 pair $(\pi,\mathrm{id})$. Their concatenation has pair $(f,g)$: the first
 coordinate composes in reverse physical order, while the second composes
-in physical order. This also verifies explicitly the order needed for the
-backward scan.
+in physical order, as required for the backward scan.
 \end{proof}
 
-Only pairs with both coordinates singular are asserted in this lemma.
-They suffice for all contexts used below. In particular, define the
+The lemma covers pairs in which both coordinates are singular.
+All contexts used below have this form. In particular, define the
 singular map $\eta_t$ by
 \[
  \eta_t(1)=1,\qquad \eta_t(j)=2\quad(j\ne1).
@@ -439,7 +417,7 @@ It is idempotent and fixes both $1$ and $2$. When an inactive bank need
 only preserve these two distinguished points, $\eta_t$ supplies a
 singular coordinate for the paired-generation lemma.
 
-\section{Interval Diagrams and Through Channels}\label{sec:diagrams}
+\section{Interval diagrams and through channels}\label{sec:diagrams}
 
 \subsection{Composition and substitution}
 
@@ -470,9 +448,9 @@ only ordinary letters, whereas acceptance is confined to the actual
 left endmarker.
 
 The complete interval diagram $D_v=(F_v,B_v,L_v,R_v)$ records these
-functions on all states and both entry sides. Its ports carry physical
-state labels; the two sides are distinguished even if their labels
-are the same.
+functions on all states and both entry sides. An entry or exit, also called a \emph{port}, is specified by a state
+and a side. Ports on opposite sides are distinct even when they have
+the same state label.
 
 \begin{lemma}[Composition and substitution]\label{lem:diagrams}
 The diagram $D_{uv}$ is determined by $D_u,D_v$. Equality of diagrams
@@ -508,15 +486,18 @@ group arguments use instead
 \begin{equation}\label{eq:product}
                          D_uD_v=D_v\diamond D_u=D_{vu}.
 \end{equation}
-Thus multiplication is in reverse physical order, and the semantic
-map $D_w\mapsto(f_w,g_w^{-1})$ will multiply by ordinary functional composition.
-All word representatives and all physical runs remain unchanged.
+This reverses the order of concatenation so that
+$D_w\mapsto(f_w,g_w^{-1})$ respects ordinary composition of functions.
+The convention concerns only the notation for multiplication.
 
-\subsection{The product semantic quotient}
+\subsection{The quotient determined by the source transformations}
 
 For the fixed recognizer, let $M$ consist of the
 diagrams of nonempty $\{\mathtt A,\mathtt B\}$-words whose semantic pair
-$(f_w,g_w^{-1})$ belongs to $\Alt_k\times\Alt_\ell$. It is a finite semigroup under~\eqref{eq:product}. Write
+$(f_w,g_w^{-1})$ belongs to $\Alt_k\times\Alt_\ell$. We call this
+the \emph{semantic pair}: it records the source transformations,
+whereas $D_w$ records the target behavior. The set $M$ is a finite
+semigroup under~\eqref{eq:product}. Write
 $G=\Alt_k\times\Alt_\ell$. Every element of $G$ has an allowed
 word representative by the independent generation above.
 
@@ -597,9 +578,9 @@ every $h$ is a unit with inverse $h^{t-1}$ when $t>1$, and inverse
 $e$ when $t=1$. Thus $eMe$ is a group with identity $e$.
 
 The only idempotent in $G$ is its identity, so $\theta(e)=1$.
-For any $x\in M$, the sandwich $exe$ has image $\theta(x)$.
-Thus this actual group still maps onto $G$. Its elements
-belong to $M$, which was defined using nonempty actual words.
+For any $x\in M$, the element $exe$ has image $\theta(x)$.
+Thus $eMe$ still maps onto $G$. Every element belongs to $M$ and
+is therefore represented by a nonempty word.
 \end{proof}
 
 Fix this idempotent diagram $e$. Write
@@ -610,7 +591,7 @@ These are signed sets: $U$ consists of right-exit labels and $V$
 of left-exit labels. They are treated as disjoint even when they
 contain the same underlying state name.
 
-\subsection{The unit normal form and its state bound}
+\subsection{The action on through channels}
 
 \begin{lemma}[Unit channels]\label{lem:unit-channels}
 Every unit $g$ of $eMe$ has the same return functions and through
@@ -652,8 +633,8 @@ points. The image inclusion is consequently equality, and there
 is a unique permutation $\alpha_g$ satisfying \eqref{eq:unit-form}. Reflection gives
 the statement for $B_g$ and $\beta_g$.
 
-We next justify the multiplication law; this also checks that fixed
-returns do not hide extra memory. In $e\diamond e=e$, enter the
+To prove the multiplication law, we examine what happens at the
+join between two intervals. In $e\diamond e=e$, enter the
 join with a right-exit label $u\in U$ from the left factor. Such
 a label is produced by some forward entry of $e$. At the join,
 successive left returns of the right factor and right returns of
@@ -677,7 +658,7 @@ permutations is therefore faithful. In particular,
 $\alpha_e=\mathrm{id}_U$ and $\beta_e=\mathrm{id}_V$.
 \end{proof}
 
-\begin{lemma}[Nonempty physical capacity]\label{lem:capacity}
+\begin{lemma}[The number of through channels]\label{lem:capacity}
 The signed through-image sets satisfy
 \begin{equation}\label{eq:capacity}
                               |U|+|V|\le m.
@@ -690,12 +671,18 @@ visits every cell of that word. No two can contain the same state
 on the same cell, because the two deterministic suffix runs would
 then be identical and would give the same signed exit. Fix any one
 ordinary cell. The chosen runs consequently use distinct physical
-states there, giving \eqref{eq:capacity}. This is not a count of formal left/right
-ports: it is a count of actual states at one cell. Nonemptiness is
-essential; the empty interval would formally have $2m$ through ports.
+states there, giving \eqref{eq:capacity}. The argument uses one
+ordinary cell and therefore requires a nonempty word; an empty
+interval would formally have $2m$ through ports.
 \end{proof}
 
-\section{Small Actions of a Product of Alternating Groups}\label{sec:groups}
+\section{Small actions of a product of alternating groups}\label{sec:groups}
+
+We next show why fewer than $2(k+\ell)$ channels force one alternating
+factor to act on just one natural orbit. The main step is
+Lemma~\ref{lem:isolation}. Its proof first limits the possible orbit
+sizes, then removes the actions on the other orbits by taking derived
+subgroups. The first two lemmas provide the required index bounds.
 
 An action is \emph{faithful} if only the identity fixes every point.
 A transitive permutation group is \emph{imprimitive} if it preserves
@@ -708,7 +695,7 @@ standard facts that $\Alt_d$ is nonabelian simple and perfect for
 $d\ge5$, and that every subgroup of $\Sym_r$ for $r\le4$ has
 derived length at most three; see~\cite{DixonMortimer1996}.
 
-The external primitive-group input is the following unconditional fact:
+We use the following theorem of Shareshian and Woodroofe:
 for $d\ge9$, every prime $p\le d-3$ divides the index of every
 proper primitive subgroup of $\Alt_d$. This is
 \cite[Lemma~4.2, p.~230]{SW}. For odd $p$, its proof uses Sylow
@@ -722,7 +709,7 @@ index at least $d$. Indeed, its nontrivial coset action is faithful by
 simplicity. An index $r<d$ would therefore give
 $d!/2\le r!\le(d-1)!$, a contradiction.
 
-\begin{lemma}[Small index is natural]\label{lem:small-index}
+\begin{lemma}[Subgroups of small index]\label{lem:small-index}
 If $t\ge11$ and $J<\Alt_t$ satisfies $[\Alt_t:J]<4t+2$, then $J$ is the
 stabilizer of a point in the natural action on $[t]$.
 \end{lemma}
@@ -832,7 +819,7 @@ More precisely, the $N$-orbits within $\Lambda x$ form $d$ blocks,
 each of size $r$. Indeed, $NH_x=\theta^{-1}(J_x)$, so these blocks
 are indexed by $\Lambda/(NH_x)$. Their induced $\Lambda$-action
 is the coset action of $G$ on $G/J_x$, which is the natural action of the assigned factor.
-The other semantic factor acts trivially on this set of blocks.
+The other factor of $G$ fixes each of these blocks.
 
 Each factor must have at least one orbit assigned to it. Otherwise,
 let $K$ be the full preimage in $\Lambda$ of that factor, with the
@@ -876,7 +863,7 @@ $\Gamma$-orbit is contained in an invariant part $U$ or $V$, proving
 the signed-orbit assertion.
 \end{proof}
 
-\begin{corollary}[Product channel capacity]\label{cor:product-capacity}
+\begin{corollary}[Minimum degree of the product action]\label{cor:product-capacity}
 Under the group and degree hypotheses of
 Lemma~\ref{lem:isolation}, every faithful action of a finite group
 surjecting onto $\Alt_k\times\Alt_\ell$ has at least $k+\ell$ points.
@@ -895,7 +882,7 @@ Lemma~\ref{lem:unit-channels}.
 \end{proof}
 
 
-\section{Permutation Queries and the Lower Bounds}\label{sec:lower}
+\section{Permutation queries and the lower bounds}\label{sec:lower}
 
 \subsection{Fixed answer continuations}
 
@@ -981,7 +968,7 @@ There are at least $d-3\ge2$ such inputs; this changes the parity
 without changing a prescribed pair.
 \end{proof}
 
-\begin{lemma}[Forbidden inverse subset]\label{lem:inverse-obstruction}
+\begin{lemma}[A limit on permutation queries]\label{lem:inverse-obstruction}
 For $d\ge5$, a query controller cannot recognize
 \begin{equation}\label{eq:inverse-test}
                             \pi^{-1}(i)\in T
@@ -993,8 +980,8 @@ rejection, as in the automaton model.
 The predicate is nonconstant, so the initial fixed computation must
 query some index $a$. For each first answer $j\ne i$, the condition
 $\pi(a)=j$ is compatible with either truth value in \eqref{eq:inverse-test}: prescribe
-the preimage of $i$ in $T\setminus\{a\}$ for a positive instance,
-or in $([d]\setminus T)\setminus\{a\}$ for a negative one.
+the preimage of $i$ in $T\setminus\{a\}$ for an instance satisfying the predicate,
+or in $([d]\setminus T)\setminus\{a\}$ for one that does not.
 Both sets are nonempty. These are two-pair prescriptions and hence
 have even completions by Lemma~\ref{lem:even-completion}.
 
@@ -1009,8 +996,8 @@ Otherwise none of the answer controls could terminate with acceptance.
 
 If $f(j)=a$ for some $j\ne i$, choose any $c\in T\setminus\{a\}$
 and an even permutation satisfying $\pi(a)=j,\pi(c)=i$.
-Its required-positive computation repeats query $a$ and answer $j$
-forever. Thus $f(j)\ne a$. If $f(j)\notin T$, prescribe
+The predicate holds for this permutation, but the controller repeats
+query $a$ and answer $j$ forever. Thus $f(j)\ne a$. If $f(j)\notin T$, prescribe
 $\pi(a)=j$ and $\pi(f(j))=i$. The computation accepts after the
 second query, although the prescribed preimage of $i$ is outside
 $T$. Hence necessarily
@@ -1028,9 +1015,7 @@ permutation with
                     \pi(a)=j_1,\qquad\pi(b)=j_2,\qquad\pi(c)=i.
 \]
 It satisfies \eqref{eq:inverse-test}, but its run asks $a$, then $b$, then $b$
-forever. This contradiction proves the lemma. Every witness used
-at most three prescribed pairs; no completion of an arbitrarily
-long adaptive transcript was assumed.
+forever, and hence rejects. This is the required contradiction.
 \end{proof}
 
 \subsection{The complement lower bound}
@@ -1043,20 +1028,23 @@ $\overline{L_{k,\ell}}$ has at least $2(k+\ell)$ states.
 Suppose a target for the complement has $m<2(k+\ell)$ states. Lemmas~\ref{lem:semantic-product}, \ref{lem:group-extraction},
 \ref{lem:unit-channels}, and~\ref{lem:capacity} give a faithful group of signed channels mapping onto $\Alt_k\times\Alt_\ell$, with at most $m$ channels. Lemma~\ref{lem:isolation} supplies a subgroup mapping isomorphically onto one semantic factor, with exactly one natural moving orbit for that factor, and fixing all other channels. Its other semantic coordinate is the identity. Every element has an actual nonempty word representative.
 
-All contexts used next are available by Lemma~\ref{lem:paired-generation}: every coordinate of every chosen context is singular. In an inactive coordinate use the rank-two idempotent $\eta_d$ that fixes $1,2$ and sends every other point to $2$. It need not act as identity on all points. For each active coordinate of degree $d$, a selector with
+We now choose contexts that turn acceptance into the query test of
+Lemma~\ref{lem:inverse-obstruction}. Each transformation used in
+these contexts is singular, so the contexts exist by
+Lemma~\ref{lem:paired-generation}. In an inactive coordinate use the rank-two idempotent $\eta_d$ that fixes $1,2$ and sends every other point to $2$. It need not act as identity on all points. For each active coordinate of degree $d$, a selector with
 $a(1)=x,a(2)=y$ can be chosen to send every index other than $1$
 to $y$. An output test for $S\subseteq[d]$ sends $S$ to $1$ and
 its complement to $2$. Thus each active map also has rank at most
 two. All these maps are singular because $d\ge11$.
 
-\emph{Isolated forward semantic factor.} The semantic middle pair is $(\pi,\id)$, with $\pi\in\Alt_k$. Choose left and right forward transformations $a,b$ with $a(1)=x$, $a(2)=y$, and $b^{-1}(1)=S$. Both backward context transformations are $\eta_\ell$. The entire backward map fixes $1,2$, so the source answer is
+\emph{The subgroup maps onto the forward factor.} The semantic middle pair is $(\pi,\id)$, with $\pi\in\Alt_k$. Choose left and right forward transformations $a,b$ with $a(1)=x$, $a(2)=y$, and $b^{-1}(1)=S$. Both backward context transformations are $\eta_\ell$. The entire backward map fixes $1,2$, so the source answer is
 \begin{equation}\label{eq:forward-factor}
 \pi(x)\in S\quad\hbox{or}\quad\pi(y)\in S.
 \end{equation}
 If the moving channel orbit is forward, take $x\ne y$ and $S=\{i\}$. The complement predicate is $\pi^{-1}(i)\in[k]\setminus\{x,y\}$, forbidden by Lemmas~\ref{lem:query-interface} and \ref{lem:inverse-obstruction}.
 If the orbit is backward, set $x=y=i$ and $|S|=2$. Put $\sigma=\pi^{-1}$. The raw query is $\sigma$, and the complement predicate is $\sigma^{-1}(i)\in[k]\setminus S$, again forbidden.
 
-\emph{Isolated backward semantic factor.} Write the semantic middle pair as $(\id,\sigma)$, so the actual backward map is $g=\sigma^{-1}$. Give both forward contexts transformation $\eta_k$. The entire forward map fixes $1,2$. Put a selector $a$, with $a(1)=x,a(2)=y$, in the \emph{right} backward context, and an output test $b$, with $b^{-1}(1)=S$, in the \emph{left} backward context. The source answer is
+\emph{The subgroup maps onto the backward factor.} Write the semantic middle pair as $(\id,\sigma)$, so the actual backward map is $g=\sigma^{-1}$. Give both forward contexts transformation $\eta_k$. The entire forward map fixes $1,2$. Put a selector $a$, with $a(1)=x,a(2)=y$, in the \emph{right} backward context, and an output test $b$, with $b^{-1}(1)=S$, in the \emph{left} backward context. The source answer is
 \begin{equation}\label{eq:backward-factor}
 g(x)\in S\quad\hbox{or}\quad g(y)\in S.
 \end{equation}
@@ -1070,7 +1058,7 @@ Both predicates violate the same obstruction. This covers every possible isolate
 
 \begin{corollary}\label{cor:source-minimal}
 For $k\ge11$ and $\ell\in\{k,k+1\}$,
-$\scTwo(L_{k,\ell})=k+\ell$.
+$\statecomplexity(L_{k,\ell})=k+\ell$.
 \end{corollary}
 \begin{proof}
 Let an arbitrary $m$-state automaton recognize $L_{k,\ell}$. The
@@ -1085,7 +1073,7 @@ $m\ge k+\ell$. The five-tuple in Section~\ref{sec:new-witness}
 attains this bound.
 \end{proof}
 
-\section{Halting Complementation and Incoming Directions}
+\section{Halting complementation and incoming directions}
 \label{sec:direction-upper}
 
 \subsection{Direction-determinate sources}
@@ -1095,8 +1083,8 @@ The method goes back to Sipser~\cite{Sipser1980}; its use in
 complementation appears in GMP~\cite{GMP}. The two-state-per-source-state
 traversal for direction-determinate graph-walking automata is given
 by Kunc and Okhotin~\cite{kuncokhotin2020} and restated in
-\cite[Lemma~8]{martynovaokhotin2021}. The table below accounts for
-the initial control and the unique accepting configuration directly.
+\cite[Lemma~8]{martynovaokhotin2021}. We specify the initial state and accepting configuration as part of
+the transition table, so neither requires an additional state.
 
 Call a source automaton \emph{direction-determinate} if there is a map
 $d:Q\to\{-1,+1\}$ such that every defined transition, including every
@@ -1128,7 +1116,7 @@ Fix a total order $<$ on $Q$. The complement has state set
   Q'=\{B_q:q\in Q\}\mathbin{\dot\cup}\{F_q:q\in Q\},
   \qquad A^c=(Q',\Sigma,\delta',B_f,F_f).
 \]
-All $2n$ states are counted. The meanings of these states are as follows. A configuration $(B_q,j)$
+These are all the states of the complement. Their roles are as follows. A configuration $(B_q,j)$
 enumerates the predecessors of the source configuration $(q,j+d(q))$;
 all those predecessors lie at cell $j$. A configuration $(F_p,j)$ means
 that the reverse subtree rooted at $(p,j)$ has been traversed, and the
@@ -1149,9 +1137,9 @@ skip candidate $p$. Such a source configuration has no predecessor, since
 its predecessor cell would be outside the tape.
 \item Otherwise return the transition $(B_p,-d(p))$.
 \end{enumerate}
-If the list is exhausted, return $\mathsf{exhausted}$. This selection is
-performed when specifying the finite transition table; it introduces neither
-extra states nor stationary moves. In particular, the initial-configuration
+If the list is exhausted, return $\mathsf{exhausted}$. The selection is made when the transition table is constructed,
+not during the run. It therefore uses no extra states or stationary
+moves. In particular, the initial-configuration
 test precedes the boundary-leaf test.
 
 Set the initialization row to
@@ -1205,12 +1193,12 @@ proves both complementation and halting with $2n$ states.
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
 Take $k=\lfloor n/2\rfloor$, $\ell=\lceil n/2\rceil$, and
 $K_n=L_{k,\ell}$. Corollary~\ref{cor:source-minimal} gives
-$\scTwo(K_n)=k+\ell=n$. The witness is direction-determinate,
+$\statecomplexity(K_n)=k+\ell=n$. The witness is direction-determinate,
 since all $P$-states are entered moving right and all $Q$-states
 moving left. Theorem~\ref{thm:direction-upper} therefore supplies
 a halting complement with at most $2n$ states.
 Theorem~\ref{thm:complement-lower} requires at least $2n$ states.
-Thus $\scTwo(\overline{K_n})=2n$.
+Thus $\statecomplexity(\overline{K_n})=2n$.
 \end{proof}
 
 \subsection{States entered in both directions}
@@ -1257,7 +1245,7 @@ with Theorem~\ref{thm:main}, this gives
 The matching $2n$ upper bound applies to direction-determinate sources;
 the lower bound in Theorem~\ref{thm:main} applies to unrestricted targets.
 
-\section{Acceptance Conventions and the GMP Gap}\label{sec:conventions}
+\section{Comparison with GMP's acceptance convention}\label{sec:conventions}
 
 The exact equalities of Theorem~\ref{thm:main} use left-endmarker
 acceptance. In GMP's definition~\cite[Section~2]{GMP}, stationary
@@ -1286,11 +1274,11 @@ where $a$ is fresh, $\widehat\delta(f,\LL)=(a,0)$, all rows of
 $a$ are undefined, and every other old row is unchanged. Only $a$
 is globally final. Thus for every nontrivial language $L$,
 \[
- \scTwo(L)\le \operatorname{sc}_{\mathrm{GMP}}(L)
-              \le \scTwo(L)+1.
+ \statecomplexity(L)\le \operatorname{sc}_{\mathrm{GMP}}(L)
+              \le \statecomplexity(L)+1.
 \]
-The additive constant preserves the leading factor of two, but an
-exact state count requires keeping it. Merely applying these two
+The extra state does not affect the leading factor, but it matters
+for the exact bound. Merely applying these two
 inequalities gives a $2N-2$ complement lower bound for the
 $N=n+1$ state source. A fixed channel in GMP's normal form yields
 the stronger exact comparison below.
@@ -1378,34 +1366,36 @@ $n+1=N$ and $2n+1=2N-1$.
 For this family the GMP ratio is $(2N-1)/N=2-1/N$, tending to two.
 The explicit $(2N-1)$-state complement also shows that the same
 language cannot witness a $2N$ lower bound in GMP's convention.
-The exact $2n$ statement of Theorem~\ref{thm:main} and the exact
-$2N-1$ statement above refer to their respective state-counting
-conventions.
+Theorems~\ref{thm:main} and~\ref{thm:gmp-exact} give the exact
+counts in the two respective models.
 
 \section{Conclusion}
 
-Over one fixed ternary alphabet, every $n\ge22$ admits a language
-with exact two-way deterministic state complexity $n$ and exact
-complement complexity $2n$ in the stated model. Both minima allow
-arbitrary deterministic transition tables and infinite rejecting runs.
-The lower bound combines a product of alternating groups, a capacity
-bound for actual through runs, isolation of one natural factor orbit,
-and a query obstruction with fixed answer continuations. In GMP
-state counts, the same language has exact complexities $N$ and
-$2N-1$, giving the same asymptotic factor.
+We have exhibited a language of two-way deterministic state complexity
+$n$ whose complement requires exactly $2n$ states, for every $n\ge22$,
+over one fixed ternary alphabet. In GMP's convention the same family
+has exact complexities $N$ and $2N-1$. This answers their question
+about the existence of a complementation gap.
 
-The witness attains the $2n$ halting-complement bound for
-direction-determinate sources. For general sources, the construction
-with $2n+2b$ states isolates a necessary feature of any family forcing
-a larger leading constant: a positive proportion of the source states
-must be entered in both directions. Determining the best general
-constant between two and four remains a separate problem.
+The witness reaches the $2n$ upper bound for direction-determinate
+sources. For general sources, the bound $2n+2b$ shows that a larger
+leading constant requires linearly many states that can be entered
+from both directions. The optimal general constant remains between
+two and four.
 
 \section*{Acknowledgments}
 I thank my advisor, Christos Kapoutsis, for his guidance and support.
-I would also like to thank Adam Abu Ghaida for his help verifying the
-correctness of my proof. I also thank Codex Astra Ultra for assistance
-with the research and preparation of this manuscript.
+I would also like to thank Adam Ghaida for his help verifying the
+correctness of my proof.
+
+This work was developed with assistance from OpenAI's Codex Astra Ultra.
+I contributed initial ideas and discussed the constructions and proofs
+with Astra. Astra developed most of my mathematical outputs, including the two-bank witness and its ternary encoding, the
+interval-diagram and alternating-group arguments, and the
+permutation-query obstruction. Astra also helped adapt the known
+reverse-tree traversal to the stated model, derive the comparison
+with GMP's convention, and write and run finite checks. I take responsibility for the manuscript and
+any errors.
 
 \bibliographystyle{plain}
 \bibliography{complementation_exact_references}
